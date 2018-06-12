@@ -1,0 +1,3 @@
+cf api https://api.eu-de.bluemix.net
+cf login --sso -u christian.romeyke@de.ibm.com
+cf push

@@ -1,0 +1,23 @@
+{
+	"metaData": {
+		"template": "free_text",
+		"language": "de",
+		"channels": ["EMAIL"],
+		"subject": ""
+	},
+	"customer": {
+		"firstName": "Christian",
+		"lastName": "Romeyke",
+		"email": "christian.romeyke@de.ibm.com",
+		"phoneNumber": "+491723882703"
+	},
+	"vehicle": {
+		"finOrVin": "WDD00000000000110",
+		"licensePlate": "BB-BB 1111"
+	},
+	"content": {
+		"FREETEXT": "Ihr Auto kann nun abgeholt werden.",
+		"SUBJECT": "Ihr Auto kann nun abgeholt werden."
+	},
+	"attachments": []
+}
