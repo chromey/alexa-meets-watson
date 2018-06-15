@@ -1,26 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const request = require('request');
 const ConversationV1 = require('watson-developer-cloud/conversation/v1');
 const _ = require('lodash');
 
 const conversation = new ConversationV1(Object.assign(require('../watson-credentials.json'), { version_date: ConversationV1.VERSION_DATE_2017_05_26 }));
-
-router.get('/*', function (req, res, next) {
-	// res.json({ ok: req.query });
-	conversation.message({
-		input: { text: "anything to do today?" },
-		workspace_id: 'xxx'
-	}, (err, response) => {
-		if (err) {
-			console.error(err);
-			res.json(err);
-		} else {
-			console.log(JSON.stringify(response, null, 2));
-			res.json(response);
-		}
-	});
-});
 
 let context; // use global for now
 
@@ -29,12 +12,11 @@ router.post('/*', (req, res, next) => {
 	if (req.body.request.intent) {
 		intent = req.body.request.intent.name;
 	}
-	const lang = req.body.request.locale.substr(0, 2);
 	if (!intent || intent === 'AMAZON.StopIntent') {
 		respond(res, "Bis bald.");
 	} else {
 		const spoken = req.body.request.intent.slots.EveryThingSlot.value;
-		sendToWatson(spoken, lang, (err, watsonResponse) => {
+		sendToWatson(spoken, (err, watsonResponse) => {
 			if (err) {
 				console.log('--ERR', err);
 				return respond(res, 'Bis bald');
@@ -71,16 +53,11 @@ function respond(res, watsonResponse) {
 	});
 }
 
-const workspaces = {
-	en: '04ad5565-8fa9-444c-bdba-02de8e3ea396',
-	de: 'dcec2db0-5a2b-424c-9dc5-0dcff4225721'
-}
-
-function sendToWatson(spokenRequest, lang, cb) {
+function sendToWatson(spokenRequest, cb) {
 	conversation.message({
 		input: { text: spokenRequest },
 		context,
-		workspace_id: workspaces[lang]
+		workspace_id: 'dcec2db0-5a2b-424c-9dc5-0dcff4225721'
 	}, cb);
 }
 
