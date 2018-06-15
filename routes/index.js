@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const ConversationV1 = require('watson-developer-cloud/conversation/v1');
 const _ = require('lodash');
+const request = require('request');
 
 const conversation = new ConversationV1(Object.assign(require('../watson-credentials.json'), { version_date: ConversationV1.VERSION_DATE_2017_05_26 }));
 
@@ -22,7 +23,12 @@ router.post('/*', (req, res, next) => {
 				return respond(res, 'Bis bald');
 			}
 			console.log('--RESPONSE', JSON.stringify(watsonResponse, null, 2));
-			respond(res, watsonResponse);
+
+			if (watsonResponse,output.liftSecret) {
+				// use 'request' library to obtain data from http://myjson.com/1blxry
+			} else {
+				respond(res, watsonResponse);
+			}
 		});
 	}
 });
